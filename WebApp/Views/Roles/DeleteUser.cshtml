@@ -1,0 +1,8 @@
+﻿@model WebApp.Models.User
+<h1>Удалить</h1>
+
+<h3>Вы уверены что хотите удалить пользователя @Html.DisplayFor(model => model.Email) ?</h3>
+<div>
+    @Html.ActionLink("Удалить", "DeleteUserConfirmed", "Roles", new { id = Model.Id }) |
+    <a asp-action="Index">Назад</a>
+</div> 

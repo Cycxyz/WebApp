@@ -1,0 +1,8 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+<h1>Удалить</h1>
+
+<h3>Вы уверены что хотите удалить роль @Html.DisplayFor(model=>model.Name) ?</h3>
+<div>
+    @Html.ActionLink("Удалить", "DeleteConfirmed", "Roles", new {id=Model.Id}) |
+        <a asp-action="Index">Назад</a>
+</div> 

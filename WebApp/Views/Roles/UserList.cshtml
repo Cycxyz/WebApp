@@ -1,0 +1,17 @@
+﻿@model IEnumerable<WebApp.Models.User>
+
+<h2>Список користувачів</h2>
+<table class="table">
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Права доступу  </a>
+           
+            @Html.ActionLink("Удалить", "DeleteUser", "Roles", new { id = user.Id })
+            @Html.ActionLink("Изменить пароль", "ChangePassword", "Roles", new { userId=user.Id})
+            </td>
+        </tr>
+    }
+</table>

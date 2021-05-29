@@ -1,0 +1,64 @@
+﻿@model WebApp.Bands
+
+@{
+    ViewData["Title"] = "Детально";
+}
+
+<h1>Детально</h1>
+
+<div>
+    <h4>Группы</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @("Стили")
+        </dt>
+        @for (int i = 0; i < ViewBag.StyleName.Count; i++)
+        {
+            @if (i != 0)
+            {
+                <dt class="col-sm-2">
+
+                </dt>
+            }
+            <dd class="col-sm-10">
+                @ViewBag.StyleName[i]
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @("Исполнители")
+        </dt>
+        @for (int i = 0; i < ViewBag.ArtistName.Count; i++)
+        {
+            @if (i != 0)
+            {
+                <dt class="col-sm-2">
+
+                </dt>
+            }
+            <dd class="col-sm-10">
+                @(ViewBag.ArtistName[i] + " " + ViewBag.ArtistSurName[i])
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole("admin"))
+    {
+    <a asp-action="Edit" asp-route-id="@Model.BandId">Изменить|</a> 
+    }
+    @if (ViewBag.ConcertId == -1)
+    {
+    <a asp-controller="Bands" asp-action="Index">Вернуться к группам</a>
+    }
+    else
+    {
+        @Html.ActionLink("Вернуться к концерту", "Details", "Concerts", new { id = ViewBag.ConcertId });
+    }
+</div>

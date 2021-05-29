@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApp.BandToStyle>
+
+@{
+    ViewData["Title"] = "Стиль";
+}
+
+<h1>Группы к стилям</h1>
+
+<p>
+    <a asp-action="Create">Создать</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Band)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Style)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Band.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style.Type)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BandToStyleId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.BandToStyleId">Детально</a> |
+                <a asp-action="Delete" asp-route-id="@item.BandToStyleId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

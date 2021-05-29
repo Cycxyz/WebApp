@@ -1,0 +1,67 @@
+﻿@model WebApp.Concerts
+
+@{
+    ViewData["Title"] = "Детально";
+}
+
+<h1>Детально</h1>
+
+<div>
+    <h4>Концерты</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConcertAdress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConcertAdress.Adress)
+        </dd>
+        <dt class="col-sm-2">
+            @("Город проведения")
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Cities
+        </dd>
+        <dt class="col-sm-2">
+            @("Количество билетов")
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.TicketsCount
+        </dd>
+        <dt class="col-sm-2">
+            @("Группы на концерте")
+        </dt>
+        @for (int i = 0; i < ViewBag.BandsName.Count; i++)
+        {
+            @if (i != 0)
+            {
+                <dt class="col-sm-2">
+
+                </dt>
+            }
+            <dd class="col-sm-10">
+                @ViewBag.BandsName[i]|
+                @Html.ActionLink("Детально", "Details", "Bands", new { id = ViewBag.BandsId[i], ConcertId=ViewBag.ConcertId  })
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole("admin")) {
+    <a asp-action="Edit|" asp-route-id="@Model.ConcertId">Изменить</a>
+    }
+    @if (User.IsInRole("user"))
+    {
+        <a asp-action="Buy" asp-route-concertId="@Model.ConcertId">Купить билет</a>
+    }
+    <a asp-action="Index">Назад</a>
+</div>
+@{ 
+    var a = 1;
+}

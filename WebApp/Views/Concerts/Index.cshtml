@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WebApp.Concerts>
+
+@{
+    ViewData["Title"] = "Концерты";
+}
+
+<h1>Концерты</h1>
+@if(User.IsInRole("admin"))
+{
+<div>
+    <h3>Выберите ехеl для загрузки</h3>
+    @using (Html.BeginForm("Import", "Concerts", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+    {
+        <div>
+            Загрузить Excel-файл:
+            <input type="file" name="fileExcel" id="fileExcel" />
+            <div>
+                <input type="submit" value="Загрузить" />
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <h3>Загрузить информацию в файл</h3>
+    @*<a asp-action="Export">Завантажити</a>*@
+    @Html.ActionLink("Загрузить", "Export", "Concerts", new {concerts = ViewBag.Model})
+</div>
+}
+
+<form method="get">
+    <div class="form-inline form-group">
+        <label class="control-label"> Группы </label><p>&emsp;</p>
+        <select name="BandId" asp-items="@ViewBag.Bands" class="form-control"></select>
+        <p>&emsp;</p>
+        <label class="control-label">Города</label>
+        <p>&emsp;</p>
+        <select name="CityId" asp-items="@ViewBag.Cities" class="form-control"></select>
+        <p>&emsp;</p>
+        <label class="control-label">Дата концерта</label>
+        <p>&emsp;</p>
+        <input type="date" name="date" class="form-control" />
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+@if (User.IsInRole("admin"))
+{
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConcertAdress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConcertAdress.Adress)
+                </td>
+                <td>
+                    @if(User.IsInRole("admin")) {
+
+                    <a asp-action="Delete" asp-route-id="@item.ConcertId">Удалить|</a>
+                    }
+                    @if (User.IsInRole("admin"))
+                    {<a asp-action="Edit" asp-route-id="@item.ConcertId">Изменить|</a>}
+                    <a asp-action="Details" asp-route-id="@item.ConcertId">Детально</a>
+                    
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="container">
+    <div id="chart1"></div>
+</div>
+@section scripts{
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Diagrams/JsonData', function (JsonData) {
+                data = google.visualization.arrayToDataTable(JsonData, false);
+                var option = {
+                    title: "Отношения концертов к городам, в которых они проходят",
+                    width: 500,
+                    height: 400
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chart1'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+}
+

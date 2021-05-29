@@ -1,0 +1,30 @@
+﻿@model WebApp.ConcertManToBand
+
+@{
+    ViewData["Title"] = "Детально";
+}
+
+<h1>Детально</h1>
+
+<div>
+    <h4>Исполнители в группах</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Band)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Band.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ConcertMan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ConcertMan.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ConcertManToBandId">Изменить</a> |
+    <a asp-action="Index">Назад</a>
+</div>

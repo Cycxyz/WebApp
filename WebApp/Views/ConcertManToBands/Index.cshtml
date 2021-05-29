@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApp.ConcertManToBand>
+
+@{
+    ViewData["Title"] = "Исполнители в группах";
+}
+
+<h1>Исполнители в группах</h1>
+
+<p>
+    <a asp-action="Create">Создать</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Band)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConcertMan)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Band.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConcertMan.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ConcertManToBandId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.ConcertManToBandId">Детально</a> |
+                <a asp-action="Delete" asp-route-id="@item.ConcertManToBandId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,10 @@
+﻿<div>
+Выберите номер места
+    </div>
+<div>
+    <form method="post">
+    <select name="ticketId" asp-items="ViewBag.Tickets"></select>
+    <input type="submit" value="Купить"/>
+    </form>
+</div>
+<a asp-action="Index">Назад</a>
